@@ -1,18 +1,20 @@
 import Header from "./Header/Header.tsx";
 import Sidebar from "./Sidebar/Sidebar.tsx";
 import type {FC, ReactNode} from "react";
+import styles from './DefaultLayout.module.scss'
+import classNames from "classnames/bind";
 
+const cx = classNames.bind(styles)
 type DefaultLayoutProps = {
     children?: ReactNode;
 }
 const DefaultLayout: FC<DefaultLayoutProps> = ({children}) => {
     return (
-        <div className="wrapper flex flex-col w-full
-        items-center">
+        <div className={cx('wrapper')}>
             <Header/>
-            <div className="w-[var(--default-layout-width)] bg-[#333] flex ">
+            <div className={cx('container')}>
                 <Sidebar/>
-                <div className='flex-1 bg-[#cdc] min-h[1000px]'>
+                <div className={cx('content')}>
                     {children}
                 </div>
             </div>

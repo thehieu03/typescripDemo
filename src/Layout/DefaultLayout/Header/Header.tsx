@@ -1,7 +1,11 @@
-const Header = () => {
-    return <header className="h-[var(--default-layout-header-height)] shadow-md flex justify-center">
+import classNames from "classnames/bind";
+import styles from "./Header.module.scss";
 
-        <div className="h-full w-[var(--default-layout-width)] bg-blue-500">
+const cx = classNames.bind(styles);
+const Header = () => {
+    return <header className={cx("wrapper")}>
+        <div className={cx("inner")}>
+            <h1>Header</h1>
         </div>
     </header>;
 };

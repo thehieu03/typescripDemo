@@ -17,6 +17,13 @@ html {
 
 a {
     text-decoration: none;
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
 }
 
 body {
