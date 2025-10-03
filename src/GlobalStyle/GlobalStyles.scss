@@ -21,6 +21,11 @@ a, button, [tabindex] {
   border: none;
 }
 
+input {
+  outline: none;
+  border: none;
+}
+
 a[href] {
   color: var(--text-color);
   text-decoration: none;
