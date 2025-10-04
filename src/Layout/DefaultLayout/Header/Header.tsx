@@ -54,9 +54,14 @@ const Header = () => {
                 </div>
             </Tippy>
             <div className={cx("actions")}>
-                <Button to="" href="">
+                <Button text={true}>
                     Upload
                 </Button>
+                <Button leftIcon={<FontAwesomeIcon icon={faMagnifyingGlass}/>} rounded={true} primary={true}
+                        className={cx('custom-login')}>
+                    Login
+                </Button>
+
             </div>
         </div>
     </header>;
