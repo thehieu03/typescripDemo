@@ -1,16 +1,17 @@
-import type {Items} from "../../../../Models/Items.tsx";
-import type {FC} from "react";
-import Button from "../../Button/Button.tsx";
 import classNames from "classnames/bind";
 import styles from "./Menu.module.scss";
+import type {Items} from "../../../../Models/Items.tsx";
+import Button from "../../Button/Button.tsx";
 
 const cx = classNames.bind(styles);
-type MenuItemProps = {
-    data: Items;
+
+interface MenuItemProps {
+    data?: Items
 }
-const MenuItem: FC<MenuItemProps> = ({data}) => {
+
+const MenuItem = ({data}: MenuItemProps) => {
     return (
-        <Button className={cx('menu-item')} leftIcon={data.icon} to={data.to}>{data.title}</Button>
+        <Button className={cx('menu-item')} leftIcon={data?.icon} to={data?.to}>{data?.title}</Button>
     );
 };
 

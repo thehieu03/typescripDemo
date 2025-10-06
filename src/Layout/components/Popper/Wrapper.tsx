@@ -4,11 +4,12 @@ import React, {type FC} from "react";
 
 const cx = classNames.bind(style);
 type WrapperProps = {
-    children: React.ReactNode
+    children: React.ReactNode,
+    className?: string
 }
-const Wrapper: FC<WrapperProps> = ({children}) => {
+const Wrapper: FC<WrapperProps> = ({children, className}) => {
     return (
-        <div className={cx("wrapper")}>
+        <div className={cx("wrapper", className)}>
             {children}
         </div>
     );

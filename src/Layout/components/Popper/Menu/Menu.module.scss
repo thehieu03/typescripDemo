@@ -1,18 +1,27 @@
-// menu items
 .menu-list {
-  width: 224px;
+  width: 224px !important;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 8px;
 
   .menu-item {
-    margin-left: 0;
+    margin-left: 0px;
+    display: block !important;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
-.menu-item {
-  width: 100%;
-  justify-content: flex-start;
+.more-btn {
+  font-size: 2rem;
+  margin-left: 20px;
+  background-color: transparent;
+  padding: 4px 8px;
+}
 
-  &:hover {
-    background-color: rgba(22, 24, 35, 0.03);
-  }
+.menu-popper {
+  padding-bottom: 8px;
 }
 
