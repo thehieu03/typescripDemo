@@ -72,17 +72,18 @@ function Button({
         Comp = "a";
     }
 
-    const classes = cx("wrapper", {primary},
-        {outline},
-        {[size!]: size},
-        {text},
-        {disabled},
-        {rounded}, {
-            className
-        });
+    const classes = cx(
+        "wrapper",
+        { primary },
+        { outline },
+        { [size!]: !!size },
+        { text },
+        { disabled },
+        { rounded }
+    );
 
     return (
-        <Comp className={classes} {..._props}>
+        <Comp className={`${classes}${className ? ` ${className}` : ''}`} {..._props}>
             {leftIcon && <span className={cx("icon")}>{leftIcon}</span>}
             <span className={cx('tittle')}>{children}</span>
             {rightIcon && <span className={cx("icon")}>{rightIcon}</span>}

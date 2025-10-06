@@ -1,6 +1,6 @@
 import {type FC, type ReactElement} from "react";
 import {Wrapper as PopperWrapper} from "../index.tsx";
-import Tippy from "@tippyjs/react";
+import Tippy from "@tippyjs/react/headless";
 import classNames from "classnames/bind";
 import styles from "./Menu.module.scss";
 import type {Items} from "../../../../Models/Items.tsx";
@@ -22,8 +22,8 @@ const Menu: FC<MenuProps> = ({children, items}) => {
     }
     return (
         <Tippy
-            interactive={true}
-            visible={true}
+            interactive
+            delay={[0, 500]}
             placement="bottom-end"
             render={attrs => (
                 <div className={cx('menu-list')} tabIndex={-1} {...attrs}>
