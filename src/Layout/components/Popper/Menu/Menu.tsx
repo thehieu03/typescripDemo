@@ -5,6 +5,7 @@ import classNames from "classnames/bind";
 import styles from "./Menu.module.scss";
 import type {Items} from "../../../../Models/Items.tsx";
 import MenuItem from "./MenuItem.tsx";
+import HeaderMenu from "./HeaderMenu.tsx";
 
 const cx = classNames.bind(styles);
 
@@ -23,11 +24,13 @@ const Menu: FC<MenuProps> = ({children, items}) => {
     return (
         <Tippy
             interactive
+            visible={true}
             delay={[0, 500]}
             placement="bottom-end"
             render={attrs => (
                 <div className={cx('menu-list')} tabIndex={-1} {...attrs}>
                     <PopperWrapper className={cx('menu-popper')}>
+                        <HeaderMenu title='Language'/>
                         {renderItems()}
                     </PopperWrapper>
                 </div>
