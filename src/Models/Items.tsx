@@ -1,7 +1,11 @@
 import type {JSX} from "react";
 
 export interface Items {
-    icon: JSX.Element;
+    icon?: JSX.Element;
     title: string;
     to?: string;
+    children?: {
+        title: string;
+        data: Items[];
+    }
 }

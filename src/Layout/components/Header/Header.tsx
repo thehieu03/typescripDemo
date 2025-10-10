@@ -23,7 +23,18 @@ import type {Items} from "../../../Models/Items.tsx";
 const cx = classNames.bind(styles);
 const MENU_ITEMS: Items[] = [{
     icon: <FontAwesomeIcon icon={faEarthAsia}/>,
-    title: 'English'
+    title: 'English',
+    children: {
+        title: 'Language',
+        data: [
+            {
+                title: 'English'
+            },
+            {
+                title: 'Tiếng Việt'
+            }
+        ]
+    }
 }, {
     icon: <FontAwesomeIcon icon={faCircleQuestion}/>,
     title: 'Feedback and help',
@@ -40,6 +51,10 @@ const Header = () => {
             setSearchResult([])
         }, 1000)
     });
+    // handle menu change
+    const handleMenuChange = (menuItem: Items) => {
+        console.log(menuItem);
+    }
     return <header className={cx("wrapper")}>
         <div className={cx("inner")}>
             <div className={cx("logo")}>
@@ -84,7 +99,7 @@ const Header = () => {
                     Login
                 </Button>
 
-                <Menu items={MENU_ITEMS}>
+                <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
                     <button className={cx('more-btn')}>
                         <FontAwesomeIcon icon={faEllipsisVertical}/>
                     </button>

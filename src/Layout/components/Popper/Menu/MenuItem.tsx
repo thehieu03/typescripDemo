@@ -6,12 +6,13 @@ import Button from "../../Button/Button.tsx";
 const cx = classNames.bind(styles);
 
 interface MenuItemProps {
-    data?: Items
+    data?: Items,
+    onClick?: () => void
 }
 
-const MenuItem = ({data}: MenuItemProps) => {
+const MenuItem = ({data, onClick}: MenuItemProps) => {
     return (
-        <Button className={cx('menu-item')} leftIcon={data?.icon} to={data?.to}>{data?.title}</Button>
+        <Button className={cx('menu-item')} leftIcon={data?.icon} to={data?.to} click={onClick}>{data?.title}</Button>
     );
 };
 

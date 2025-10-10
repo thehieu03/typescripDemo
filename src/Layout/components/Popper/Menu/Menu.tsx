@@ -1,4 +1,4 @@
-import {type FC, type ReactElement} from "react";
+import {type FC, type ReactElement, useState} from "react";
 import {Wrapper as PopperWrapper} from "../index.tsx";
 import Tippy from "@tippyjs/react/headless";
 import classNames from "classnames/bind";
@@ -11,16 +11,33 @@ const cx = classNames.bind(styles);
 
 type MenuProps = {
     children: ReactElement,
-    items?: Items[]
+    items?: Items[],
+    onChange?: (menuItem: Items) => void
 }
 
-const Menu: FC<MenuProps> = ({children, items}) => {
+const Menu: FC<MenuProps> = ({children, items, onChange}) => {
+    const [history, setHistory] = useState([{data: items}]);
+    const current = history[history.length - 1];
     const renderItems = (): ReactElement[] | null => {
-        if (!items || items.length === 0) return null;
-        return items.map((item, index) => (
-            <MenuItem data={item} key={index}/>
-        ));
-    }
+        if (!current.data || current.data.length == 0) return null;
+        return current.data.map((item, index) => {
+            const isParent = !!item.children;
+
+            return (
+                <MenuItem
+                    data={item}
+                    key={index}
+                    onClick={() => {
+                        if (isParent && item.children) {
+                            setHistory(prev => [...prev, item.children!]);
+                        } else {
+                            onChange(item);
+                        }
+                    }}
+                />
+            );
+        });
+    };
     return (
         <Tippy
             interactive
@@ -30,7 +47,9 @@ const Menu: FC<MenuProps> = ({children, items}) => {
             render={attrs => (
                 <div className={cx('menu-list')} tabIndex={-1} {...attrs}>
                     <PopperWrapper className={cx('menu-popper')}>
-                        <HeaderMenu title='Language'/>
+                        {history.length > 1 && <HeaderMenu title='Language' onBack={() => {
+                            setHistory(prevState => prevState.slice(0, prevState.length - 1));
+                        }}/>}
                         {renderItems()}
                     </PopperWrapper>
                 </div>
