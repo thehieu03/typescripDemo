@@ -3,12 +3,13 @@ import styles from "./Header.module.scss";
 import image from "../../../assets/images";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faCircleQuestion,
-    faCircleXmark,
-    faEarthAsia,
-    faEllipsisVertical,
-    faKeyboard,
-    faMessage, faUser,
+  faCircleQuestion,
+  faCircleXmark,
+  faEarthAsia,
+  faEllipsisVertical,
+  faKeyboard,
+  faMessage,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import TippyHeadless from "@tippyjs/react/headless";
@@ -23,6 +24,7 @@ import Button from "../Button/Button.tsx";
 import Menu from "../Popper/Menu/Menu.tsx";
 import type { Items } from "../../../Models/Items.tsx";
 import { PhoneIcon } from "../Icons/Index.tsx";
+import Image from "../Image/Image.tsx";
 
 const cx = classNames.bind(styles);
 const MENU_ITEMS: Items[] = [
@@ -138,9 +140,11 @@ const Header = () => {
                   <PhoneIcon />
                 </button>
               </Tippy>
-              <button className={cx("button-btn")}>
-                <FontAwesomeIcon icon={faMessage} />
-              </button>
+              <Tippy delay={[0, 200]} content="Message" placement="bottom">
+                <button className={cx("button-btn")}>
+                  <FontAwesomeIcon icon={faMessage} />
+                </button>
+              </Tippy>
             </>
           ) : (
             <>
@@ -150,14 +154,20 @@ const Header = () => {
               </Button>
             </>
           )}
-
           <Menu
             items={stateLogin ? userMenu : MENU_ITEMS}
             onChange={handleMenuChange}
           >
-            <button className={cx("more-btn")}>
-              <FontAwesomeIcon icon={faEllipsisVertical} />
-            </button>
+            {stateLogin ? (
+              <Image
+                className={cx("user-avatar")}
+                fallback="https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/396e9/MainBefore.jpg"
+              />
+            ) : (
+              <button className={cx("more-btn")}>
+                <FontAwesomeIcon icon={faEllipsisVertical} />
+              </button>
+            )}
           </Menu>
         </div>
       </div>

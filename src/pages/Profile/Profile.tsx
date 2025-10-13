@@ -5,7 +5,6 @@ const Profile = () => {
     return (
         <div>
             <Button rightIcon={<CiSearch/>} onClick={() => (alert('hieu'))}>Hieudzvl</Button>
-
         </div>
     );
 };
