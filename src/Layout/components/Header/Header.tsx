@@ -7,10 +7,12 @@ import {
     faCircleXmark,
     faEarthAsia,
     faEllipsisVertical,
-    faKeyboard
+    faKeyboard, faMessage
 } from "@fortawesome/free-solid-svg-icons";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-import Tippy from '@tippyjs/react/headless';
+import TippyHeadless from '@tippyjs/react/headless';
+import Tippy from '@tippyjs/react';
+
 import 'tippy.js/dist/tippy.css';
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import {useEffect, useState} from "react";
@@ -19,6 +21,7 @@ import AccountItem from "../AccountItem/AccountItem.tsx";
 import Button from "../Button/Button.tsx";
 import Menu from "../Popper/Menu/Menu.tsx";
 import type {Items} from "../../../Models/Items.tsx";
+import {PhoneIcon} from "../Icons/Index.tsx";
 
 const cx = classNames.bind(styles);
 const MENU_ITEMS: Items[] = [{
@@ -28,10 +31,12 @@ const MENU_ITEMS: Items[] = [{
         title: 'Language',
         data: [
             {
-                title: 'English'
+                title: 'English',
+                code: 'en'
             },
             {
-                title: 'Tiếng Việt'
+                title: 'Tiếng Việt',
+                code: 'vi'
             }
         ]
     }
@@ -53,15 +58,23 @@ const Header = () => {
     });
     // handle menu change
     const handleMenuChange = (menuItem: Items) => {
-        console.log(menuItem);
+        switch (menuItem.code) {
+            case 'en':
+                break;
+            case 'vi':
+                break;
+            default:
+                break;
+        }
     }
+    const stateLogin = true;
     return <header className={cx("wrapper")}>
         <div className={cx("inner")}>
             <div className={cx("logo")}>
                 <img src={image.logo} alt="Tiktok logo"/>
             </div>
             <div>
-                <Tippy
+                <TippyHeadless
                     interactive={true}
                     visible={searchResult.length > 0}
                     render={attrs => (
@@ -88,21 +101,40 @@ const Header = () => {
                         </button>
 
                     </div>
-                </Tippy>
+                </TippyHeadless>
             </div>
             <div className={cx("actions")}>
-                <Button text={true}>
-                    Upload
-                </Button>
-                <Button primary={true}
-                        className={cx('custom-login')}>
-                    Login
-                </Button>
+                {stateLogin == true ? (
+                    <>
+                        <Tippy delay={[0, 200]} content='Upload' placement='bottom'>
+                            <button className={cx('button-btn')}>
+                                <PhoneIcon/>
+                            </button>
+                        </Tippy>
+                        <button className={cx('button-btn')}>
+                            <FontAwesomeIcon icon={faMessage}/>
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <Button text={true}>
+                            Upload
+                        </Button>
+                        <Button primary={true}
+                                className={cx('custom-login')}>
+                            Login
+                        </Button>
+                    </>
+
+                )}
 
                 <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
-                    <button className={cx('more-btn')}>
-                        <FontAwesomeIcon icon={faEllipsisVertical}/>
-                    </button>
+                    {stateLogin == true ? (<>
+                    </>) : (<>
+                        <button className={cx('more-btn')}>
+                            <FontAwesomeIcon icon={faEllipsisVertical}/>
+                        </button>
+                    </>)}
                 </Menu>
 
             </div>

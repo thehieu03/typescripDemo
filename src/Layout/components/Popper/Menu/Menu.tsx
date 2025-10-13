@@ -31,7 +31,7 @@ const Menu: FC<MenuProps> = ({children, items, onChange}) => {
                         if (isParent && item.children) {
                             setHistory(prev => [...prev, item.children!]);
                         } else {
-                            onChange(item);
+                            onChange?.(item);
                         }
                     }}
                 />
@@ -40,8 +40,7 @@ const Menu: FC<MenuProps> = ({children, items, onChange}) => {
     };
     return (
         <Tippy
-            interactive
-            visible={true}
+            interactive={true}
             delay={[0, 500]}
             placement="bottom-end"
             render={attrs => (
@@ -54,6 +53,9 @@ const Menu: FC<MenuProps> = ({children, items, onChange}) => {
                     </PopperWrapper>
                 </div>
             )}
+            onHide={() => {
+                setHistory(prevState => prevState.slice(0, 1))
+            }}
         >
             {children}
         </Tippy>
