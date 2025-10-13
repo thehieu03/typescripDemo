@@ -104,7 +104,7 @@ const Header = () => {
                 </TippyHeadless>
             </div>
             <div className={cx("actions")}>
-                {stateLogin == true ? (
+                {stateLogin ? (
                     <>
                         <Tippy delay={[0, 200]} content='Upload' placement='bottom'>
                             <button className={cx('button-btn')}>
