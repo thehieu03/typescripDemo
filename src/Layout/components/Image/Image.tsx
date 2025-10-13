@@ -1,15 +1,11 @@
-import {forwardRef, type ImgHTMLAttributes} from "react";
+import { forwardRef, type ImgHTMLAttributes } from "react";
 
-interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
+type ImageProps = ImgHTMLAttributes<HTMLImageElement>;
 
-}
+const Image = forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
+  return <img ref={ref} {...props} />;
+});
 
-const Image = forwardRef<HTMLImageElement, ImageProps>(
-    (props, ref) => {
-        return <img ref={ref} {...props} />;
-    }
-);
-
-Image.displayName = 'Image';
+Image.displayName = "Image";
 
 export default Image;
