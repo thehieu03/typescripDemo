@@ -2,11 +2,10 @@
 import {DefaultLayout, HeaderOnly} from "../Layout";
 // public routes
 import Following from "../pages/Following/Following.tsx";
-import {type FC, Fragment, type ReactNode} from "react";
+import {type FC, type ReactNode} from "react";
 import Home from "../pages/Home/Home.tsx";
 import Profile from "../pages/Profile/Profile.tsx";
 import Upload from "../pages/Upload/Upload.tsx";
-import Search from "../pages/Search/Search.tsx";
 
 type AppRoute = {
     path: string;
@@ -32,10 +31,6 @@ const publicRoutes: AppRoute[] = [
         path: 'upload',
         element: <Upload/>,
         layout: HeaderOnly
-    }, {
-        path: 'search',
-        element: <Search/>,
-        layout: Fragment
     }
 ];
 // private routes
