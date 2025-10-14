@@ -2,25 +2,41 @@ import TippyHeadless from "@tippyjs/react/headless";
 import { Wrapper as PopperWrapper } from "../Popper";
 import AccountItem from "../AccountItem/AccountItem.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import classNames from "classnames/bind";
 import styles from "./Search.module.scss";
 import { useEffect, useRef, useState } from "react";
+import type { SearchResponse } from "../../../Models/SearchResponse.tsx";
 
 const cx = classNames.bind(styles);
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [searchResult, setSearchResult] = useState<number[]>([]);
+  const [searchResult, setSearchResult] = useState<SearchResponse[]>([]);
   const [showResult, setShowResult] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      setSearchResult([1, 2, 3]);
-    }, 0);
-  }, []);
+    if (!searchValue.trim()) {
+      return;
+    }
+    setLoading(true);
+    fetch(
+      `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
+        searchValue
+      )}&type=less`
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        setSearchResult(res.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, [searchValue]);
 
   const handleClear = () => {
     setSearchValue("");
@@ -39,9 +55,9 @@ const Search = () => {
           <div className={cx("search-result")} tabIndex={-1} {...attrs}>
             <PopperWrapper>
               <h4 className={cx("search-tittle")}>Accounts</h4>
-              <AccountItem />
-              <AccountItem />
-              <AccountItem />
+              {searchResult.map((res) => {
+                return <AccountItem key={res.id} data={res} />;
+              })}
             </PopperWrapper>
           </div>
         )}
@@ -57,10 +73,13 @@ const Search = () => {
             onChange={(e) => setSearchValue(e.target.value)}
             onFocus={() => setShowResult(true)}
           />
-          {!!searchValue && (
-            <button className={cx("clear")} onClick={handleClear}>
-              <FontAwesomeIcon icon={faCircleXmark} />
-            </button>
+          {!!searchValue && !loading && (
+              <button className={cx("clear")} onClick={handleClear}>
+                  <FontAwesomeIcon icon={faCircleXmark}/>
+              </button>
+          )}
+          {loading && (
+            <FontAwesomeIcon icon={faSpinner} className={cx("loading")} />
           )}
           <button className={cx("search-btn")}>
             <FontAwesomeIcon icon={faMagnifyingGlass} />
