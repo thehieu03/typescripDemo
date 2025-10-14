@@ -8,6 +8,7 @@ import classNames from "classnames/bind";
 import styles from "./Search.module.scss";
 import { useEffect, useRef, useState } from "react";
 import type { SearchResponse } from "../../../Models/SearchResponse.tsx";
+import {useDebounce} from "../../../hooks";
 
 const cx = classNames.bind(styles);
 
@@ -16,16 +17,17 @@ const Search = () => {
   const [searchResult, setSearchResult] = useState<SearchResponse[]>([]);
   const [showResult, setShowResult] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
+  const debounced=useDebounce(searchValue,500);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!searchValue.trim()) {
+    if (!debounced.trim()) {
       return;
     }
     setLoading(true);
     fetch(
       `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
-        searchValue
+          debounced
       )}&type=less`
     )
       .then((response) => response.json())
@@ -36,7 +38,7 @@ const Search = () => {
       .catch(() => {
         setLoading(false);
       });
-  }, [searchValue]);
+  }, [debounced]);
 
   const handleClear = () => {
     setSearchValue("");
