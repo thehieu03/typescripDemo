@@ -40,6 +40,7 @@ const Search = () => {
 
   const handleClear = () => {
     setSearchValue("");
+      setSearchResult([]);
     inputRef.current?.focus();
   };
   const handleHideResult = () => {
