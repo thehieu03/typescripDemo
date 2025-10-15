@@ -9,7 +9,7 @@ import styles from "./Search.module.scss";
 import {type ChangeEvent, useEffect, useRef, useState} from "react";
 import type {SearchResponse} from "../../../Models/SearchResponse.tsx";
 import {useDebounce} from "../../../hooks";
-import {searchServices} from "../../../apiServices/SearchServices.tsx";
+import {searchServices} from "../../../services/SearchServices.tsx";
 
 const cx = classNames.bind(styles);
 
@@ -51,9 +51,7 @@ const Search = () => {
     };
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        // Block leading space and all-whitespace-only values
         if (value.startsWith(" ") || value.trim() === "") {
-            // Still allow clearing to empty string
             if (value === "") setSearchValue("");
             return;
         }

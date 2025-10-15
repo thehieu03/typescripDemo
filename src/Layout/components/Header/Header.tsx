@@ -55,13 +55,7 @@ const MENU_ITEMS: Items[] = [
 
 // (removed unused USER_MENU)
 const Header = () => {
-  // const [searchResult, setSearchResult] = useState([]);
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setSearchResult([1, 1, 1]);
-  //   }, 1000);
-  // });
-  // handle menu change
+
   const handleMenuChange = (menuItem: Items) => {
     switch (menuItem.code) {
       case "en":
