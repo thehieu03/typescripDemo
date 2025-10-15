@@ -13,14 +13,15 @@
   --primary: #fe2c55;
 
   --default-layout-horizantal-spacer: 24px;
-
 }
 
 html {
   font-size: 62.5%;
 }
 
-a, button, [tabindex] {
+a,
+button,
+[tabindex] {
   text-decoration: none;
   outline: none;
   border: none;
@@ -44,9 +45,16 @@ button {
 
 body {
   background: #fff;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 1.6rem;
   line-height: 1.5;
+  overflow-y: auto;
+}
+
+// Scrollbar Css
+html *::-webkit-scrollbar {
+  border-radius: 0;
+  width: 8px;
 }
 
 // custom tippy tooltip
@@ -66,4 +74,20 @@ body {
   .tippy-arrow {
     color: rgba(84, 84, 84, 0.92);
   }
+}
+
+// Scrollbar CSS
+html *::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 0;
+}
+
+html *::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0);
 }

@@ -1,21 +1,25 @@
 import Button from "../../Layout/components/Button/Button.tsx";
 import { CiSearch } from "react-icons/ci";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams, Navigate } from "react-router-dom";
 
 const Profile = () => {
   const location = useLocation();
-
-  // Kiểm tra xem URL có phải là profile route không
-  if (!location.pathname.startsWith("/@")) {
+  const params = useParams();
+  const rawParam = params.nickname ?? "";
+  // If the path is "/@nickname", params.nickname will be "@nickname"
+  // If the path is "/nickname", it will be "nickname"
+  const hasAtPrefix = rawParam.startsWith("@");
+  const nickname = hasAtPrefix ? rawParam.slice(1) : rawParam;
+  // Optional: Normalize to "/@nickname" if user hit "/nickname"
+  if (!hasAtPrefix && nickname) {
     return (
-      <div>
-        <h1>404 - Page Not Found</h1>
-        <p>The page you're looking for doesn't exist.</p>
-      </div>
+      <Navigate
+        to={`/@${nickname}`}
+        replace={true}
+        state={{ from: location }}
+      />
     );
   }
-
-  const nickname = location.pathname.replace("/@", "");
 
   return (
     <div>

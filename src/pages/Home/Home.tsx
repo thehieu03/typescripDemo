@@ -1,7 +1,8 @@
 const Home = () => {
     return (
-        <div>
-        </div>
+
+        <h1 style={{height:6000}}>Home page</h1>
+
     );
 };
 

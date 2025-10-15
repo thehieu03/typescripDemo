@@ -5,6 +5,7 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import Image from "../Image/Image";
 import type { SearchResponse } from "../../../Models/SearchResponse.tsx";
 import { Link } from "react-router-dom";
+import routesConfig from "../../../config/routes";
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +19,10 @@ const AccountItem = ({ data }: AccountItemProps) => {
   }
 
   return (
-    <Link to={`/@${data.nickname}`} className={cx("wrapper")}>
+    <Link
+      to={routesConfig.profile.replace(":nickname", data.nickname)}
+      className={cx("wrapper")}
+    >
       <Image className={cx("avatar")} src={data.avatar} alt="Image" />
       <div className={cx("info")}>
         <h4 className={cx("name")}>

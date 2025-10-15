@@ -20,6 +20,8 @@ import type { Items } from "../../../Models/Items.tsx";
 import { PhoneIcon } from "../Icons/Index.tsx";
 import Image from "../Image/Image.tsx";
 import Search from "../Search/Search.tsx";
+import { Link } from "react-router-dom";
+import routesConfig from "../../../config/routes";
 
 const cx = classNames.bind(styles);
 const MENU_ITEMS: Items[] = [
@@ -36,7 +38,7 @@ const MENU_ITEMS: Items[] = [
         {
           title: "Tiếng Việt",
           code: "vi",
-        },
+        }
       ],
     },
   },
@@ -93,11 +95,13 @@ const Header = () => {
     <header className={cx("wrapper")}>
       <div className={cx("inner")}>
         <div className={cx("logo")}>
-          <img src={image.logo} alt="Tiktok logo" />
+          <Link to={routesConfig.home} className={cx("logo-link")}>
+            <img src={image.logo} alt="Tiktok logo" />
+          </Link>
         </div>
-          {/*Search*/}
-            <Search/>
-          {/*end search*/}
+        {/*Search*/}
+        <Search />
+        {/*end search*/}
         <div className={cx("actions")}>
           {stateLogin ? (
             <>

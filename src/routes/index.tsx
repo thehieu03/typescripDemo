@@ -1,5 +1,6 @@
 // Layout
 import { DefaultLayout, HeaderOnly } from "../Layout";
+import routesConfig from "../config/routes";
 // public routes
 import Following from "../pages/Following/Following.tsx";
 import { type FC, type ReactNode } from "react";
@@ -14,22 +15,27 @@ type AppRoute = {
 };
 const publicRoutes: AppRoute[] = [
   {
-    path: "/",
+    path: routesConfig.home,
     element: <Home />,
     layout: DefaultLayout,
   },
   {
-    path: "/following",
+    path: routesConfig.following,
     element: <Following />,
     layout: DefaultLayout,
   },
   {
-    path: "/upload",
+    path: routesConfig.upload,
     element: <Upload />,
     layout: HeaderOnly,
   },
   {
-    path: "*",
+    path: "/@:nickname",
+    element: <Profile />,
+    layout: DefaultLayout,
+  },
+  {
+    path: routesConfig.profile,
     element: <Profile />,
     layout: DefaultLayout,
   },
