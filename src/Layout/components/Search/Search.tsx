@@ -8,7 +8,8 @@ import classNames from "classnames/bind";
 import styles from "./Search.module.scss";
 import { useEffect, useRef, useState } from "react";
 import type { SearchResponse } from "../../../Models/SearchResponse.tsx";
-import {useDebounce} from "../../../hooks";
+import { useDebounce } from "../../../hooks";
+import { httpGet } from "../../../utils/http.tsx";
 
 const cx = classNames.bind(styles);
 
@@ -17,7 +18,7 @@ const Search = () => {
   const [searchResult, setSearchResult] = useState<SearchResponse[]>([]);
   const [showResult, setShowResult] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
-  const debounced=useDebounce(searchValue,500);
+  const debounced = useDebounce(searchValue, 500);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -25,24 +26,61 @@ const Search = () => {
       return;
     }
     setLoading(true);
-    fetch(
-      `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
-          debounced
-      )}&type=less`
-    )
-      .then((response) => response.json())
-      .then((res) => {
-        setSearchResult(res.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+    const handle=async ()=>{
+        try {
+            const res= await httpGet("users/search", {
+                params: {
+                    q: debounced,
+                    type: "less",
+                },
+            });
+            setSearchResult(res.data);
+            console.log(res.data);
+            setLoading(false);
+        }catch (e){
+            setLoading(false);
+            setSearchResult([]);
+            console.log(e);
+        }
+    }
+    handle().catch(console.error);
+    // httpGet("users/search", {
+    //   params: {
+    //     q: debounced,
+    //     type: "less",
+    //   },
+    // })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     setSearchResult(res.data || []);
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setSearchResult([]);
+    //     setLoading(false);
+    //   });
+    // `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
+    //     debounced
+    // )}&type=less`
+    // fetch(
+    //   `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
+    //       debounced
+    //   )}&type=less`
+    // )
+    //   .then((response) => response.json())
+    //   .then((res) => {
+    //     setSearchResult(res.data);
+    //     setLoading(false);
+    //   })
+    //   .catch(() => {
+    //     setLoading(false);
+    //   });
   }, [debounced]);
 
   const handleClear = () => {
     setSearchValue("");
-      setSearchResult([]);
+    setSearchResult([]);
     inputRef.current?.focus();
   };
   const handleHideResult = () => {
@@ -53,7 +91,7 @@ const Search = () => {
     <div>
       <TippyHeadless
         interactive={true}
-        visible={searchResult.length > 0 && showResult}
+        visible={searchResult && searchResult.length > 0 && showResult}
         render={(attrs) => (
           <div className={cx("search-result")} tabIndex={-1} {...attrs}>
             <PopperWrapper>
@@ -77,9 +115,9 @@ const Search = () => {
             onFocus={() => setShowResult(true)}
           />
           {!!searchValue && !loading && (
-              <button className={cx("clear")} onClick={handleClear}>
-                  <FontAwesomeIcon icon={faCircleXmark}/>
-              </button>
+            <button className={cx("clear")} onClick={handleClear}>
+              <FontAwesomeIcon icon={faCircleXmark} />
+            </button>
           )}
           {loading && (
             <FontAwesomeIcon icon={faSpinner} className={cx("loading")} />
