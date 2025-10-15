@@ -9,7 +9,7 @@ import styles from "./Search.module.scss";
 import { useEffect, useRef, useState } from "react";
 import type { SearchResponse } from "../../../Models/SearchResponse.tsx";
 import { useDebounce } from "../../../hooks";
-import { httpGet } from "../../../utils/http.tsx";
+import {searchServices} from "../../../apiServices/SearchServices.tsx";
 
 const cx = classNames.bind(styles);
 
@@ -20,30 +20,36 @@ const Search = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const debounced = useDebounce(searchValue, 500);
   const inputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     if (!debounced.trim()) {
       return;
     }
     setLoading(true);
-    const handle=async ()=>{
-        try {
-            const res= await httpGet("users/search", {
-                params: {
-                    q: debounced,
-                    type: "less",
-                },
-            });
-            setSearchResult(res.data);
-            console.log(res.data);
-            setLoading(false);
-        }catch (e){
-            setLoading(false);
-            setSearchResult([]);
-            console.log(e);
-        }
+    const fetchApi=async ()=>{
+        setLoading(true);
+        const result=await searchServices.search(debounced);
+        setSearchResult(result);
+        setLoading(false);
     }
-    handle().catch(console.error);
+    fetchApi();
+    // const handle=async ()=>{
+    //     try {
+    //         const res= await httpGet("users/search", {
+    //             params: {
+    //                 q: debounced,
+    //                 type: "less",
+    //             },
+    //         });
+    //         setSearchResult(res.data);
+    //         console.log(res.data);
+    //         setLoading(false);
+    //     }catch (e){
+    //         setLoading(false);
+    //         setSearchResult([]);
+    //         console.log(e);
+    //     }
+    // }
+    // handle().catch(console.error);
     // httpGet("users/search", {
     //   params: {
     //     q: debounced,
