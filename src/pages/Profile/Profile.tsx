@@ -1,4 +1,4 @@
-import Button from "../../Layout/components/Button/Button.tsx";
+import Button from "../../components/Button/Button.tsx";
 import { CiSearch } from "react-icons/ci";
 import { useLocation, useParams, Navigate } from "react-router-dom";
 

@@ -1,5 +1,5 @@
-import Header from "../components/Header/Header.tsx";
-import Sidebar from "../components/Sidebar/Sidebar.tsx";
+import Header from "../../components/Header/Header.tsx";
+import Sidebar from "../../components/Sidebar/Sidebar.tsx";
 import type {FC, ReactNode} from "react";
 import styles from './DefaultLayout.module.scss'
 import classNames from "classnames/bind";
