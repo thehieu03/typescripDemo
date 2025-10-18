@@ -34,11 +34,6 @@ const publicRoutes: AppRoute[] = [
     element: <Profile />,
     layout: DefaultLayout,
   },
-  {
-    path: config.routes.profile,
-    element: <Profile />,
-    layout: DefaultLayout,
-  },
 ];
 // private routes
 const privateRoutes: string[] = [];

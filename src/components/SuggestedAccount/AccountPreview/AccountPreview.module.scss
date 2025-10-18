@@ -1,0 +1,18 @@
+.wrapper{
+  padding: 20px;
+  width: 320px;
+}
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.avatar{
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.body{
+  margin-top: 12px;
+}
